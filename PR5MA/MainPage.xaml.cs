@@ -45,32 +45,39 @@
 
         private void Calc(string math)
         {
-            if (math == "=")
+            try
             {
-                if (lastNumber != 0 && lastOne == "+")
-                {
-                    result = lastNumber + Convert.ToDouble(enResult.Text);
-                }
 
-                if (lastNumber != 0 && lastOne == "-")
+                if (math == "=")
                 {
-                    result = lastNumber - Convert.ToDouble(enResult.Text);
-                }
+                    if (lastNumber != 0 && lastOne == "+")
+                    {
+                        result = lastNumber + Convert.ToDouble(enResult.Text);
+                    }
 
-                if (lastNumber != 0 && lastOne == "*")
+                    if (lastNumber != 0 && lastOne == "-")
+                    {
+                        result = lastNumber - Convert.ToDouble(enResult.Text);
+                    }
+
+                    if (lastNumber != 0 && lastOne == "*")
+                    {
+                        result = lastNumber * Convert.ToDouble(enResult.Text);
+                    }
+
+                    enResult.Text = Convert.ToString(result);
+                }
+                else
                 {
-                    result = lastNumber * Convert.ToDouble(enResult.Text);
+                    lastOne = math;
+                    lastNumber = Convert.ToDouble(enResult.Text);
+                    enResult.Text = null;
                 }
-
-                enResult.Text = Convert.ToString(result);
             }
-            else
+            catch
             {
-                lastOne = math;
-                lastNumber = Convert.ToDouble(enResult.Text);
-                enResult.Text = null;
+                enResult.Text = "Ошибка !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
             }
-
         }
     }
 }
