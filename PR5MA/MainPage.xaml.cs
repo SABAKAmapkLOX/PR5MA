@@ -1,4 +1,7 @@
-﻿namespace PR5MA
+﻿using System.Data;
+using System.Text.RegularExpressions;
+
+namespace PR5MA
 {
     public partial class MainPage : ContentPage
     {
@@ -7,6 +10,8 @@
         {
             InitializeComponent();
         }
+
+        public int number = 0;
 
         private void ButtonNumber_Clicked(object sender, EventArgs e)
         {
@@ -25,59 +30,53 @@
                 case "0": enResult.Text += "0"; break;
                 case ",": enResult.Text += ","; break;
 
-                case "-":
-                    Calc("-");
-                    break;
-                case "*":
-                    Calc("*");
-                    break;
-                case "+":
-                    Calc("+");
-                    break;
-
-                case "=": Calc("="); break;
+                case "=": Calc(); break; 
+                case "*": enResult.Text += "*"; break; 
+                case "-": enResult.Text += "-"; break; 
+                case "+": enResult.Text += "+"; break; 
+                case "(": enResult.Text += "("; break; 
+                case ")": enResult.Text += ")"; break; 
+                case "DEL": enResult.Text.Remove(1); break; 
             }
         }
 
-        double result = 0;
-        double lastNumber = 0;
-        string lastOne = "";
 
-        private void Calc(string math)
+        private void Calc()
         {
             try
             {
-
-                if (math == "=")
-                {
-                    if (lastNumber != 0 && lastOne == "+")
-                    {
-                        result = lastNumber + Convert.ToDouble(enResult.Text);
-                    }
-
-                    if (lastNumber != 0 && lastOne == "-")
-                    {
-                        result = lastNumber - Convert.ToDouble(enResult.Text);
-                    }
-
-                    if (lastNumber != 0 && lastOne == "*")
-                    {
-                        result = lastNumber * Convert.ToDouble(enResult.Text);
-                    }
-
-                    enResult.Text = Convert.ToString(result);
-                }
-                else
-                {
-                    lastOne = math;
-                    lastNumber = Convert.ToDouble(enResult.Text);
-                    enResult.Text = null;
-                }
+                Numbers(enResult.Text);
             }
             catch
             {
-                enResult.Text = "Ошибка !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+                enResult.Text = "ОШИБКА!!!!!!!!!!!!!";
             }
+        }
+
+        private void Numbers(string example)
+        {
+            List<int> numbers = new List<int>();
+            List<string> operation = new List<string>();
+
+            bool boolOperation = false;
+            int lastNumber = 0;
+
+            for (int i = 0; i < example.Length; i++)
+            {
+                if(example[i] != '*' && example[i] != '+' && example[i] != '-' && example[i] != '/')
+                {
+                    if (boolOperation)
+                    {
+                        lastNumber += int.Parse(example[i].ToString());
+                    }
+                    numbers.Add(int.Parse(example[i].ToString()));
+                }
+                else
+                {
+                    operation.Add(example[i].ToString());
+                }
+            }
+            int c = 0;
         }
     }
 }
