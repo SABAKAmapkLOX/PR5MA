@@ -22,6 +22,7 @@
             <Button Text="2" Clicked="ButtonNumber_Clicked"/>
             <Button Text="3" Clicked="ButtonNumber_Clicked"/>
             <Button Text="+" Clicked="ButtonNumber_Clicked"/>
+            <Button Text=")" Clicked="ButtonNumber_Clicked"/>
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" Grid.Row="2" Spacing="10" Padding="10" HorizontalOptions="CenterAndExpand">
@@ -29,6 +30,7 @@
             <Button Text="5" Clicked="ButtonNumber_Clicked"/>
             <Button Text="6" Clicked="ButtonNumber_Clicked"/>
             <Button Text="-" Clicked="ButtonNumber_Clicked"/>
+            <Button Text="(" Clicked="ButtonNumber_Clicked"/>
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" Grid.Row="3" Spacing="10" Padding="10"  HorizontalOptions="CenterAndExpand">
@@ -36,13 +38,12 @@
             <Button Text="8" Clicked="ButtonNumber_Clicked"/>
             <Button Text="9" Clicked="ButtonNumber_Clicked"/>
             <Button Text="*" Clicked="ButtonNumber_Clicked"/>
+            <Button Text="/" Clicked="ButtonNumber_Clicked"/>
         </StackLayout>
         
         <StackLayout Orientation="Horizontal" Grid.Row="4" Spacing="10" Padding="10"  HorizontalOptions="CenterAndExpand">
             <Button Text="0" Clicked="ButtonNumber_Clicked"/>
             <Button Text="," Clicked="ButtonNumber_Clicked"/>
-            <Button Text="(" Clicked="ButtonNumber_Clicked"/>
-            <Button Text=")" Clicked="ButtonNumber_Clicked"/>
             <Button Text="=" Clicked="ButtonNumber_Clicked"/>
             <Button Text="DEL" Clicked="ButtonNumber_Clicked"/>
         </StackLayout>

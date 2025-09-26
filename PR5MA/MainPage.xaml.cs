@@ -27,11 +27,12 @@
 
                 case "=": Calc(); break;
                 case "*": enResult.Text += "*"; break;
+                case "/": enResult.Text += "/"; break;
                 case "-": enResult.Text += "-"; break;
                 case "+": enResult.Text += "+"; break;
                 case "(": enResult.Text += "("; break;
                 case ")": enResult.Text += ")"; break;
-                case "DEL": enResult.Text.Remove(1); break;
+                case "DEL": enResult.Text = ""; break;
             }
         }
 
@@ -60,6 +61,7 @@
             bool boolOperation = true;
             string lastNumber = "";
 
+
             for (int i = 0; i < example.Length; i++)
             {
                 if (example[i] != '*' && example[i] != '+' && example[i] != '-' && example[i] != '/')
@@ -82,11 +84,37 @@
                     _operation.Add(example[i].ToString());
                 }
             }
+
             _numbers.Add(Convert.ToInt32(lastNumber));
+
+            for (int t = 0; t < example.Length; t++)
+            {
+                if (example[t] == '(')
+                {
+                    for (int f = t; f < example.Length; f++)
+                    {
+                        if (boolOperation)
+                        {
+                            lastNumber += example[f].ToString();
+                        }
+                        else
+                        {
+                            _numbers.Add(Convert.ToInt32(lastNumber));
+                            boolOperation = true;
+                            lastNumber = "";
+                            f--;
+                        }
+                        if (example[t] == ')') break;
+                    }
+                }
+
+            }
         }
 
         private void CalcNumber()
         {
+            bool boolReturnFor = false;
+
             for (int j = 0; j < _operation.Count; j++)
             {
 
@@ -94,11 +122,17 @@
                 {
                     _numbers[j] = _numbers[j] * _numbers[j + 1];
                     _numbers.RemoveAt(j + 1);
+                    _operation.RemoveAt(j);
+                    if (_operation.Count == 0) break;
+                    j--;
                 }
                 else if (_operation[j] == "/")
                 {
                     _numbers[j] = _numbers[j] / _numbers[j + 1];
                     _numbers.RemoveAt(j + 1);
+                    _operation.RemoveAt(j);
+                    if (_operation.Count == 0) break;
+                    j--;
                 }
 
             }
@@ -106,24 +140,28 @@
             for (int i = 0; i < _operation.Count; i++)
             {
 
-                if (_numbers.Count == 2)
-                {
-                    i--;
-                }
-
                 if (_operation[i] == "-")
                 {
                     _numbers[i] = _numbers[i] - _numbers[i + 1];
                     _numbers.RemoveAt(i + 1);
+                    _operation.RemoveAt(i);
+                    if (_operation.Count == 0) break;
+                    i--;
                 }
 
                 if (_operation[i] == "+")
                 {
                     _numbers[i] = _numbers[i] + _numbers[i + 1];
                     _numbers.RemoveAt(i + 1);
+                    _operation.RemoveAt(i);
+                    if (_operation.Count == 0) break;
+                    i--;
                 }
 
             }
+
+
+            enResult.Text = Convert.ToString(_numbers[0]);
         }
     }
 }
