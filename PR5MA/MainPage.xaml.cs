@@ -52,11 +52,15 @@
 
         List<int> _numbers;
         List<string> _operation;
+        List<int> _exNumbers;
+        List<string> _exOperation;
 
         private void DivideNumbers(string example)
         {
             _numbers = new List<int>();
             _operation = new List<string>();
+            _exNumbers = new List<int>();
+            _exOperation = new List<string>();
 
             bool boolOperation = true;
             string lastNumber = "";
@@ -89,22 +93,19 @@
 
             for (int t = 0; t < example.Length; t++)
             {
-                if (example[t] == '(')
+                if (_operation[t] == "(")
                 {
-                    for (int f = t; f < example.Length; f++)
+
+                    if (boolOperation)
                     {
-                        if (boolOperation)
-                        {
-                            lastNumber += example[f].ToString();
-                        }
-                        else
-                        {
-                            _numbers.Add(Convert.ToInt32(lastNumber));
-                            boolOperation = true;
-                            lastNumber = "";
-                            f--;
-                        }
-                        if (example[t] == ')') break;
+                        lastNumber += example[f].ToString();
+                    }
+                    else
+                    {
+                        _numbers.Add(Convert.ToInt32(lastNumber));
+                        boolOperation = true;
+                        lastNumber = "";
+                        t--;
                     }
                 }
 
@@ -113,7 +114,6 @@
 
         private void CalcNumber()
         {
-            bool boolReturnFor = false;
 
             for (int j = 0; j < _operation.Count; j++)
             {
