@@ -1,7 +1,4 @@
-﻿using System.Data;
-using System.Text.RegularExpressions;
-
-namespace PR5MA
+﻿namespace PR5MA
 {
     public partial class MainPage : ContentPage
     {
@@ -10,8 +7,6 @@ namespace PR5MA
         {
             InitializeComponent();
         }
-
-        public int number = 0;
 
         private void ButtonNumber_Clicked(object sender, EventArgs e)
         {
@@ -30,13 +25,13 @@ namespace PR5MA
                 case "0": enResult.Text += "0"; break;
                 case ",": enResult.Text += ","; break;
 
-                case "=": Calc(); break; 
-                case "*": enResult.Text += "*"; break; 
-                case "-": enResult.Text += "-"; break; 
-                case "+": enResult.Text += "+"; break; 
-                case "(": enResult.Text += "("; break; 
-                case ")": enResult.Text += ")"; break; 
-                case "DEL": enResult.Text.Remove(1); break; 
+                case "=": Calc(); break;
+                case "*": enResult.Text += "*"; break;
+                case "-": enResult.Text += "-"; break;
+                case "+": enResult.Text += "+"; break;
+                case "(": enResult.Text += "("; break;
+                case ")": enResult.Text += ")"; break;
+                case "DEL": enResult.Text.Remove(1); break;
             }
         }
 
@@ -45,7 +40,8 @@ namespace PR5MA
         {
             try
             {
-                Numbers(enResult.Text);
+                DivideNumbers(enResult.Text);
+                CalcNumber();
             }
             catch
             {
@@ -53,30 +49,82 @@ namespace PR5MA
             }
         }
 
-        private void Numbers(string example)
-        {
-            List<int> numbers = new List<int>();
-            List<string> operation = new List<string>();
+        List<int> _numbers;
+        List<string> _operation;
 
-            bool boolOperation = false;
-            int lastNumber = 0;
+        private void DivideNumbers(string example)
+        {
+            _numbers = new List<int>();
+            _operation = new List<string>();
+
+            bool boolOperation = true;
+            string lastNumber = "";
 
             for (int i = 0; i < example.Length; i++)
             {
-                if(example[i] != '*' && example[i] != '+' && example[i] != '-' && example[i] != '/')
+                if (example[i] != '*' && example[i] != '+' && example[i] != '-' && example[i] != '/')
                 {
                     if (boolOperation)
                     {
-                        lastNumber += int.Parse(example[i].ToString());
+                        lastNumber += example[i].ToString();
                     }
-                    numbers.Add(int.Parse(example[i].ToString()));
+                    else
+                    {
+                        _numbers.Add(Convert.ToInt32(lastNumber));
+                        boolOperation = true;
+                        lastNumber = "";
+                        i--;
+                    }
                 }
                 else
                 {
-                    operation.Add(example[i].ToString());
+                    boolOperation = false;
+                    _operation.Add(example[i].ToString());
                 }
             }
-            int c = 0;
+            _numbers.Add(Convert.ToInt32(lastNumber));
+        }
+
+        private void CalcNumber()
+        {
+            for (int j = 0; j < _operation.Count; j++)
+            {
+
+                if (_operation[j] == "*")
+                {
+                    _numbers[j] = _numbers[j] * _numbers[j + 1];
+                    _numbers.RemoveAt(j + 1);
+                }
+                else if (_operation[j] == "/")
+                {
+                    _numbers[j] = _numbers[j] / _numbers[j + 1];
+                    _numbers.RemoveAt(j + 1);
+                }
+
+            }
+
+            for (int i = 0; i < _operation.Count; i++)
+            {
+
+                if (_numbers.Count == 2)
+                {
+                    i--;
+                }
+
+                if (_operation[i] == "-")
+                {
+                    _numbers[i] = _numbers[i] - _numbers[i + 1];
+                    _numbers.RemoveAt(i + 1);
+                }
+
+                if (_operation[i] == "+")
+                {
+                    _numbers[i] = _numbers[i] + _numbers[i + 1];
+                    _numbers.RemoveAt(i + 1);
+                }
+
+            }
         }
     }
 }
+
