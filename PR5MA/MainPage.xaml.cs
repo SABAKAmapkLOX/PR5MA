@@ -1,4 +1,6 @@
-﻿namespace PR5MA
+﻿using PR5MA.src;
+
+namespace PR5MA
 {
     public partial class MainPage : ContentPage
     {
@@ -42,8 +44,9 @@
             try
             {
                 DivideString divideString = new DivideString();
-                divideString.DivideNumbers(enResult.Text);
-                //enResult.Text = CalcNumberString.CalcNumber();
+                CalcNumberString calcNumberString = new CalcNumberString();
+                divideString.DivideNumbers(enResult.Text , calcNumberString);
+                enResult.Text = Convert.ToString(calcNumberString.CalcResult());
             }
             catch
             {

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PR5MA
+namespace PR5MA.src
 {
     public class CalcNumberString
     {
+        int result = 0;
+
         //Калькулируем
         public string CalcNumber(List<string> _operation, List<int> _numbers)
         {
@@ -56,9 +58,13 @@ namespace PR5MA
                 }
 
             }
-
-
+            result = _numbers[0];
             return Convert.ToString(_numbers[0]);
+        }
+
+        public int CalcResult()
+        {
+            return result;
         }
     }
 }
