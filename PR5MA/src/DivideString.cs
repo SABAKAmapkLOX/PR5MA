@@ -66,7 +66,6 @@ namespace PR5MA.src
                         }
 
                         parenthesisLengthIndex++;
-
                     }
                 }
 
@@ -85,6 +84,7 @@ namespace PR5MA.src
                     parenthesisStartIndex = 0;
                     parenthesisLengthIndex = 0;
                     t = 0;
+                    ListClear();
                 }
 
             }
@@ -118,6 +118,15 @@ namespace PR5MA.src
             //Добавление последнего числа и решения чего получилось
             _numbers.Add(Convert.ToInt32(lastNumber));
             calcNumberString.CalcNumber(_operation, _numbers);
+            ListClear();
+        }
+
+        private void ListClear()
+        {
+            _operation.Clear();
+            _numbers.Clear();
+            _exNumbers.Clear();
+            _exOperation.Clear();
         }
     }
 }

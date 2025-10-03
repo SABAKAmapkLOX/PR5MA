@@ -30,7 +30,12 @@ namespace PR5MA
                 case "=": Calc(); break;
                 case "*": enResult.Text += "*"; break;
                 case "/": enResult.Text += "/"; break;
-                case "-": enResult.Text += "-"; break;
+
+                case "-":
+                    enResult.Text += "-";
+                    Pricol();
+                    break;
+
                 case "+": enResult.Text += "+"; break;
                 case "(": enResult.Text += "("; break;
                 case ")": enResult.Text += ")"; break;
@@ -46,7 +51,7 @@ namespace PR5MA
                 DivideString divideString = new DivideString();
                 CalcNumberString calcNumberString = new CalcNumberString();
                 divideString.DivideNumbers(enResult.Text , calcNumberString);
-                enResult.Text = Convert.ToString(calcNumberString.CalcResult());
+                enResult.Text = Convert.ToString(calcNumberString.result);
             }
             catch
             {
@@ -54,7 +59,15 @@ namespace PR5MA
             }
         }
 
-        
+        async private void Pricol()
+        {
+            if (enResult.Text[0] == '-')
+            {
+                bool result = await DisplayAlert("Купите полную версию", "Для того что бы ввести отрицательное число купите PRO калькулятор \n За 19999р", "Мечтаю купить", "Нет");
+                if (result) enResult.Text = "Мы вас обманули";
+                else return;
+            }
+        }
     }
 }
 
